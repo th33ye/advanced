@@ -18,8 +18,8 @@ class DepartmentSearch extends Department
     public function rules()
     {
         return [
-            [['id', 'branch_id', 'company_id'], 'integer'],
-            [['name', 'created_at', 'status'], 'safe'],
+            [['id'], 'integer'],
+            [['name', 'branch_id', 'company_id'], 'safe'],
         ];
     }
 
@@ -55,15 +55,18 @@ class DepartmentSearch extends Department
             return $dataProvider;
         }
 
+        $query->joinWith('company');
+        $query->joinWith('branch');
+
         $query->andFilterWhere([
             'id' => $this->id,
-            'branch_id' => $this->branch_id,
-            'company_id' => $this->company_id,
             'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'status', $this->status]);
+        $query->andFilterWhere(['like', 'department.name', $this->name])
+            ->andFilterWhere(['like', 'department.status', $this->status])
+            ->andFilterWhere(['like', 'company.name', $this->company_id])
+            ->andFilterWhere(['like', 'branch.name', $this->branch_id]);
 
         return $dataProvider;
     }

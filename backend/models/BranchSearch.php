@@ -20,7 +20,8 @@ class BranchSearch extends Branch
         return [
 //            [['id', 'company_id'], 'integer'],
             [['id'], 'integer'],
-            [['name', 'company_id', 'address', 'created_at', 'status'], 'safe'],
+//            [['name', 'company_id', 'address', 'created_at', 'status'], 'safe'],
+            [['name', 'company_id', 'address'], 'safe'],
         ];
     }
 
@@ -63,9 +64,9 @@ class BranchSearch extends Branch
             'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', 'name', $this->name])
-            ->andFilterWhere(['like', 'address', $this->address])
-            ->andFilterWhere(['like', 'status', $this->status])
+        $query->andFilterWhere(['like', 'branch.name', $this->name])
+            ->andFilterWhere(['like', 'branch.address', $this->address])
+            ->andFilterWhere(['like', 'branch.status', $this->status])
             ->andFilterWhere(['like', 'company.name', $this->company_id]);
 
         return $dataProvider;
