@@ -19,7 +19,7 @@ class CompanySearch extends Company
     {
         return [
             [['id'], 'integer'],
-            [['name', 'email', 'address', 'created_at', 'status'], 'safe'],
+            [['name', 'email', 'address', 'started_at', 'created_at', 'status'], 'safe'],
         ];
     }
 
@@ -57,6 +57,7 @@ class CompanySearch extends Company
 
         $query->andFilterWhere([
             'id' => $this->id,
+            'started_at' => $this->started_at,
             'created_at' => $this->created_at,
         ]);
 
